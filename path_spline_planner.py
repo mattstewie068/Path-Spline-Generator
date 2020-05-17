@@ -1,8 +1,8 @@
 
-import splines
-import pygame
 import pickle
 import csv
+import pygame
+import splines
 import Color_List as CL
 import Point_Objects
 import My_Functions
@@ -15,12 +15,14 @@ def addpoint(mousepos, pointtype="general", drawyn=True):
 
 
 def update_fps():
+    """returns current FPS value"""
     fps = str(int(clock.get_fps()))
     fps_text = font.render(fps, 2, CL.CYAN)
     return fps_text
 
 
 def steps(start, end, pointcount):
+    """Calculates evenly spaced points between two values"""
     if n < 2:
         raise Exception("behaviour not defined for n<2")
     step = (end-start)/float(pointcount-1)
@@ -55,7 +57,7 @@ RUN = True
 c = []
 c_inch = []
 inputlist = []
-robot_current_position = 0
+ROBOT_CURRENT_POSITION = 0
 my_robot = Robot_Object.Robot([0, 0])
 
 while RUN:  # run until quit
@@ -147,23 +149,23 @@ while RUN:  # run until quit
             # "c" is all points created by spline code in pixel coordinates
             c = splines.CatmullRomChain(Chain, PTS_PER_SPLINE)
 
-            robot_current_position = 0
-            my_robot.pos = c[robot_current_position]
+            ROBOT_CURRENT_POSITION = 0
+            my_robot.pos = c[ROBOT_CURRENT_POSITION]
 
         if not GENERATESPLINE:
-            my_robot.pos = c[robot_current_position]
+            my_robot.pos = c[ROBOT_CURRENT_POSITION]
             my_robot.draw(screen)
 
-            robot_current_position += 1
-            if robot_current_position == len(c):
-                robot_current_position = 0
+            ROBOT_CURRENT_POSITION += 1
+            if ROBOT_CURRENT_POSITION == len(c):
+                ROBOT_CURRENT_POSITION = 0
 
         for npts in range(len(c)-1):
             pygame.draw.line(screen, CL.WHITE, My_Functions.list_to_ints(
                 c[npts]), My_Functions.list_to_ints(c[npts+1]), 3)
 
     # convert c from pixels to inches
-    c_inch = My_Functions.list_to_inch(c, WINDOWSIZE)
+    c_inch = My_Functions.list_to_inch(c, WINDOWSIZE[0])
 
     clock.tick()
     screen.blit(update_fps(), (10, 5))
