@@ -7,6 +7,16 @@ import Color_List as CL
 import Point_Objects
 import My_Functions
 import Robot_Object
+import pyfirmata
+import time
+
+uno = pyfirmata.Arduino('COM5')
+
+# define pin layout for arduino
+wled = uno.get_pin('d:10:o')
+rled = uno.get_pin('d:9:o')
+yled = uno.get_pin('d:8:o')
+gled = uno.get_pin('d:7:o')
 
 
 def addpoint(mousepos, pointtype="general", drawyn=True):
@@ -72,6 +82,17 @@ while RUN:  # run until quit
             if pygame.mouse.get_pressed()[2]:
                 addpoint(list(pygame.mouse.get_pos()), "direction")
                 GENERATESPLINE = True
+
+                # LED indicator light triggers
+                wled.write(1)
+                gled.write(1)
+                rled.write(1)
+                yled.write(1)
+                time.sleep(0.1)
+                rled.write(0)
+                wled.write(0)
+                yled.write(0)
+                gled.write(0)
 
             if pygame.mouse.get_pressed()[1]:
                 for point in reversed(list_of_points):
