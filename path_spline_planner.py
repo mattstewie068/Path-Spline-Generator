@@ -1,4 +1,7 @@
 
+import sys
+sys.path.append('C:\\Users\\matts\\Desktop\\Python Practice\\Arduino Stuff')
+import segment_display as sd
 import pickle
 import csv
 import pygame
@@ -8,6 +11,8 @@ import Point_Objects
 import My_Functions
 import Robot_Object
 
+# sd.display_0()
+print(sd.switch_1_state())
 
 def addpoint(mousepos, pointtype="general", drawyn=True):
     points_count = len(list_of_points)
@@ -152,7 +157,7 @@ while RUN:  # run until quit
             ROBOT_CURRENT_POSITION = 0
             my_robot.pos = c[ROBOT_CURRENT_POSITION]
 
-        if not GENERATESPLINE:
+        if not GENERATESPLINE and sd.switch_1_state():
             my_robot.pos = c[ROBOT_CURRENT_POSITION]
             my_robot.draw(screen)
 
@@ -167,7 +172,7 @@ while RUN:  # run until quit
     # convert c from pixels to inches
     c_inch = My_Functions.list_to_inch(c, WINDOWSIZE[0])
 
-    clock.tick()
+    clock.tick(200*sd.pot_1_state())
     screen.blit(update_fps(), (10, 5))
 
     pygame.display.flip()
