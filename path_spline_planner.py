@@ -1,4 +1,3 @@
-
 import sys
 sys.path.append('C:\\Users\\matts\\Desktop\\Python Practice\\Arduino Stuff')
 import segment_display as sd
@@ -11,8 +10,11 @@ import Point_Objects
 import My_Functions
 import Robot_Object
 
+
+
 # sd.display_0()
 print(sd.switch_1_state())
+
 
 def addpoint(mousepos, pointtype="general", drawyn=True):
     points_count = len(list_of_points)
@@ -118,12 +120,12 @@ while RUN:  # run until quit
             if pygame.key.get_pressed()[pygame.K_s]:
                 with open('storage', 'wb') as f:
                     pickle.dump(list_of_points, f)
-                print("Points Saved!")
+                sd.display_saved()
             if pygame.key.get_pressed()[pygame.K_l]:
                 with open('storage', 'rb') as f:
                     list_of_points = pickle.load(f)
                     GENERATESPLINE = True
-                print("Points Loaded!")
+                sd.display_loaded()
             if pygame.key.get_pressed()[pygame.K_e]:
                 with open("exported data.csv", "w", newline="") as f:
                     writer = csv.writer(f)
