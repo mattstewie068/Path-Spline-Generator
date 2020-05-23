@@ -1,24 +1,22 @@
+
 import sys
 sys.path.append('C:\\Users\\matts\\Desktop\\Python Practice\\Arduino Stuff')
-import segment_display as sd
-import pickle
-import csv
-import pygame
-import splines
-import Color_List as CL
-import Point_Objects
-import My_Functions
 import Robot_Object
-
-
-
-# sd.display_0()
-print(sd.switch_1_state())
+import My_Functions
+import Point_Objects
+import Color_List as CL
+import splines
+import pygame
+import csv
+import pickle
+# pylint: disable=import-error
+import segment_display as sd
+# pylint: enable=import-error
 
 
 def addpoint(mousepos, pointtype="general", drawyn=True):
     points_count = len(list_of_points)
-    list_of_points.insert((points_count-1), Point_Objects.Point(mousepos, pointtype, drawyn))
+    list_of_points.insert((points_count - 1), Point_Objects.Point(mousepos, pointtype, drawyn))
 
 
 def update_fps():
@@ -32,8 +30,8 @@ def steps(start, end, pointcount):
     """Calculates evenly spaced points between two values"""
     if n < 2:
         raise Exception("behaviour not defined for n<2")
-    step = (end-start)/float(pointcount-1)
-    return [(start+x*step) for x in range(pointcount)]
+    step = (end - start) / float(pointcount - 1)
+    return [(start + x * step) for x in range(pointcount)]
 
 
 pygame.init()
@@ -138,8 +136,8 @@ while RUN:  # run until quit
     for point in list_of_points:
         point.draw(screen)
 
-    for n in range(len(list_of_points)-1):
-        My_Functions.addline(screen, list_of_points[n], list_of_points[n+1])
+    for n in range(len(list_of_points) - 1):
+        My_Functions.addline(screen, list_of_points[n], list_of_points[n + 1])
 
     if My_Functions.duplicatept(list_of_points):
         GENERATESPLINE = False
@@ -167,14 +165,14 @@ while RUN:  # run until quit
             if ROBOT_CURRENT_POSITION == len(c):
                 ROBOT_CURRENT_POSITION = 0
 
-        for npts in range(len(c)-1):
+        for npts in range(len(c) - 1):
             pygame.draw.line(screen, CL.WHITE, My_Functions.list_to_ints(
-                c[npts]), My_Functions.list_to_ints(c[npts+1]), 3)
+                c[npts]), My_Functions.list_to_ints(c[npts + 1]), 3)
 
     # convert c from pixels to inches
     c_inch = My_Functions.list_to_inch(c, WINDOWSIZE[0])
 
-    clock.tick(200*sd.pot_1_state())
+    clock.tick(200 * sd.pot_1_state())
     screen.blit(update_fps(), (10, 5))
 
     pygame.display.flip()
