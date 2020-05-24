@@ -12,14 +12,14 @@ WINDOWSIZE = [SCREENWIDTH, SCREENHEIGHT]
 
 zoom_factor = 3
 
-TOP_TO_GOAL = 30
+TOP_TO_GOAL = 39
 OUTER_GOAL_WIDTH = 36 * zoom_factor
 INNER_GOAL_WIDTH = 13 * zoom_factor
 GOAL_DEPTH = 29
 BALL_SIZE = 7 * zoom_factor
 
-OUTER_GOAL_CENTER = [int(SCREENWIDTH / 2), (TOP_TO_GOAL + GOAL_DEPTH)]
-INNER_GOAL_CENTER = [int(SCREENWIDTH / 2), TOP_TO_GOAL]
+OUTER_GOAL_CENTER = [(SCREENWIDTH / 2), (TOP_TO_GOAL + GOAL_DEPTH)]
+INNER_GOAL_CENTER = [(SCREENWIDTH / 2), TOP_TO_GOAL]
 
 # setting up inner goal size
 inner_start_pos = int((SCREENWIDTH / 2) - (0.5 * INNER_GOAL_WIDTH))
@@ -64,9 +64,6 @@ def Triangle_solver(a, b, angle_c):
     return angle_a
 
 
-Triangle_solver(29, 144, 100)
-
-
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode(WINDOWSIZE)
 
@@ -87,7 +84,11 @@ while RUN:  # run until quit
     pygame.draw.circle(screen, CL.YELLOW, (int(SCREENWIDTH / 2), 15), int((BALL_SIZE) / 2))
 
     theta = (My_Functions.cursor_angle_to_point(OUTER_GOAL_CENTER) + 180) % 360
-    print(theta)
+
+    # for debugging only
+    innertheta = (My_Functions.angle_between_points(mousepos, INNER_GOAL_CENTER)) % 360
+    angle_to_inner_difference = theta - innertheta
+    # print(angle_to_inner_difference)
 
     distance = My_Functions.distance(mousepos, OUTER_GOAL_CENTER)
     # print(distance)
@@ -95,24 +96,24 @@ while RUN:  # run until quit
     distance_to_inner = My_Functions.distance(mousepos, INNER_GOAL_CENTER)
     # print(My_Functions.cursor_angle_to_point(OUTER_GOAL_CENTER))
 
+    pygame.draw.line(screen, CL.RED, mousepos, INNER_GOAL_CENTER, 3)
+
     if theta >= 180 and theta <= 360:
         # draw line from mouse to outer goal center
         pygame.draw.line(screen, CL.RED, mousepos, OUTER_GOAL_CENTER, 3)
         pygame.draw.circle(screen, CL.YELLOW, mousepos, int((BALL_SIZE) / 2))
 
-    if theta >= 195 and theta <= 345:
-        pygame.draw.line(screen, CL.GREEN, mousepos, (cc.convert_p_to_c(mousepos, distance, theta)),
-                         3)  # draw line from mouse at angle and distance
+    if theta >= 192 and theta <= 348:
+        pygame.draw.line(screen, CL.GREEN, mousepos, (cc.convert_p_to_c(mousepos, distance, theta)), 3)
+        # draw line from mouse at angle and distance
 
     if theta >= 220 and theta <= 270:
         new_angle = Triangle_solver(GOAL_DEPTH, distance, theta + 90)
-        # print(new_angle)
         pygame.draw.line(screen, CL.BLUE, mousepos, (cc.convert_p_to_c(
             mousepos, distance_to_inner, new_angle + theta)), 3)
 
     if theta >= 270 and theta <= 325:
         new_angle = -Triangle_solver(GOAL_DEPTH, distance, theta + 90)
-        # print(new_angle)
         pygame.draw.line(screen, CL.BLUE, mousepos, (cc.convert_p_to_c(
             mousepos, distance_to_inner, new_angle + theta)), 3)
 

@@ -27,9 +27,9 @@ def list_to_inch(lists, windowwidth, screenwidthinch=144):
 
 def distance(point1, point2):
     """Calculates distance between two specified points [x1,y1] and [x2,y2]"""
-    displacementx = point1[0]-point2[0]
-    displacementy = point1[1]-point2[1]
-    return math.sqrt((displacementx**2)+(displacementy**2))
+    displacementx = point1[0] - point2[0]
+    displacementy = point1[1] - point2[1]
+    return math.sqrt((displacementx**2) + (displacementy**2))
 
 
 def cursor_angle_to_point(pointposition):
@@ -41,6 +41,14 @@ def cursor_angle_to_point(pointposition):
     return cc.convert_c_to_p(relmousepos)[1]
 
 
+def angle_between_points(point1, point2):
+    """returns the angle that the mouse cursor has to a specified point"""
+    relmouseposx = point2[0] - point1[0]
+    relmouseposy = point2[1] - point1[1]
+    relmousepos = [relmouseposx, relmouseposy]
+    return cc.convert_c_to_p(relmousepos)[1]
+
+
 def addline(screen, point1, point2, color=CL.RED, linewidth=2):
     """draws line on specified screen between two points with a given color and linewidth"""
     pygame.draw.line(screen, color, point1.pointpos, point2.pointpos, linewidth)
@@ -48,8 +56,8 @@ def addline(screen, point1, point2, color=CL.RED, linewidth=2):
 
 def rectcenter(desiredcenter, rectwidth, rectheight):
     """Calculates where the corner of a rectangle should be given the desired center pt and size"""
-    recttransx = int(desiredcenter[0]-(rectwidth/2))
-    recttransy = int(desiredcenter[1]-(rectheight/2))
+    recttransx = int(desiredcenter[0] - (rectwidth / 2))
+    recttransy = int(desiredcenter[1] - (rectheight / 2))
     return recttransx, recttransy
 
 
@@ -82,7 +90,7 @@ def list_to_ints(lists):
 
 def duplicatept(lists):
     """compares consequative values in a list and returns true if there are any duplicate points"""
-    for points in range(len(lists)-1):
-        if lists[points] == lists[points+1]:
+    for points in range(len(lists) - 1):
+        if lists[points] == lists[points + 1]:
             return True
     return False
