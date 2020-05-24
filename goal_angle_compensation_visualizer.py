@@ -135,40 +135,31 @@ while RUN:  # run until quit
     # draw lines
     if beta >= 0 and beta <= 180:  # if cursor is below field wall draw stuff
         pygame.draw.circle(screen, CL.YELLOW, mousepos, int((BALL_SIZE) / 2))
-
-        if alpha > 0 and alpha <= 30:  # draw red no shot available lines
-            print("0-10 alpha")
+        # print(alpha)
+        # draw red no shot available lines
+        if alpha > 0 and alpha <= 90:  # draw red no shot line to inner goal
+            #print("0-30", alpha)
             pygame.draw.line(screen, CL.RED, mousepos, Point_B, 3)
+        if beta > 0 and beta <= 14:  # draw red no shot line to outer goal
             pygame.draw.line(screen, CL.RED, mousepos, OUTER_GOAL_CENTER, 3)
 
         elif alpha > 30 and alpha < 90:  # draw shots for right side of screen
-            print("10-90 alpha")
-            if alpha > 30 and alpha <= 60:  # draw green outer goal line and red line for inner goal
+            # print(alpha)
+            if alpha > 30 and alpha <= 65:  # draw green outer goal line and red line for inner goal
                 pygame.draw.line(screen, CL.GREEN, mousepos, OUTER_GOAL_CENTER, 3)
                 pygame.draw.line(screen, CL.RED, mousepos, Point_B, 3)
-            elif alpha > 60 and alpha <= 90:  # draw blue inner goal line and green outer goal line
+            elif alpha > 65 and alpha <= 90:  # draw blue inner goal line and green outer goal line
                 pygame.draw.line(screen, CL.GREEN, mousepos, OUTER_GOAL_CENTER, 3)
                 pygame.draw.line(screen, CL.BLUE, mousepos, Point_B, 3)
+        if beta > 166 and beta <= 180:  # draw red no shot line to outer goal
+            pygame.draw.line(screen, CL.RED, mousepos, OUTER_GOAL_CENTER, 3)
 
         elif alpha == 0:  # draw blue inner goal line only
-            print("0 alpha")
+            #print("0 alpha")
             pygame.draw.line(screen, CL.BLUE, mousepos, Point_B, 3)
 
-        elif alpha > 90 and alpha < 170:  # draw shots for left side of screen
-            print("90-170")
-            if alpha > 90 and alpha <= 160:  # draw blue inner goal line and green outer goal line
-                pygame.draw.line(screen, CL.GREEN, mousepos, OUTER_GOAL_CENTER, 3)
-                pygame.draw.line(screen, CL.BLUE, mousepos, Point_B, 3)
-            elif alpha > 160 and alpha <= 170:  # draw green outer goal line and red line for inner goal
-                pygame.draw.line(screen, CL.GREEN, mousepos, OUTER_GOAL_CENTER, 3)
-                pygame.draw.line(screen, CL.RED, mousepos, Point_B, 3)
-
-        elif alpha >= 170 and alpha <= 180:  # draw red no shot available lines
-            print("170-180")
-            pygame.draw.line(screen, CL.RED, mousepos, INNER_GOAL_CENTER, 3)
-            pygame.draw.line(screen, CL.RED, mousepos, OUTER_GOAL_CENTER, 3)
     elif beta > 180 and beta < 360:
-        print("180-360 (Get Back on the Field!)")
+        print("Get Back on the Field!")
 
     pygame.display.flip()
 
